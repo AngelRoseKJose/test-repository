@@ -1,7 +1,10 @@
-import { app, BrowserWindow } from 'electron';
+import { app, dialog, BrowserWindow } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Menu } from 'electron'
+import { Menu } from 'electron';
+import pkg from 'electron-updater'
+const { autoUpdater } = pkg
+
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -27,15 +30,16 @@ function createWindow() {
   }
 }
 Menu.setApplicationMenu(null);
-pp.whenReady().then(() => {
+app.whenReady().then(() => {
   createWindow();
 
   // 🔔 Check for updates
-  autoUpdater.checkForUpdates();
+  autoUpdater.checkForUpdatesAndNotify();
+
 
   // 📦 Notify when update is available
   autoUpdater.on('update-available', () => {
-    dialog.showMessageBox(win, {
+    dialog.showMessageBox(mainWindow, {
       type: 'info',
       title: 'Update Available',
       message: 'A new update is available. It will be downloaded in the background.',
@@ -45,7 +49,7 @@ pp.whenReady().then(() => {
   // ✅ Notify when update is downloaded
   autoUpdater.on('update-downloaded', () => {
     dialog
-      .showMessageBox(win, {
+      .showMessageBox(mainWindow, {
         type: 'question',
         buttons: ['Restart', 'Later'],
         defaultId: 0,

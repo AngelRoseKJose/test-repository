@@ -1,7 +1,7 @@
 {
 	"name": "electron-test-app",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.0.9",
 	"type": "module",
 	"main": "electron/electron.js",
 	"homepage": "https://github.com/AngelRoseKJose/test-repository.git",
@@ -43,6 +43,17 @@
 				"deb"
 			],
 			"category": "Utility"
+		},
+		"win": {
+			"target": [
+				"nsis",
+				"portable"
+			]
+		},
+		"nsis": {
+			"oneClick": false,
+			"perMachine": false,
+			"allowToChangeInstallationDirectory": true
 		}
 	},
 	"devDependencies": {
